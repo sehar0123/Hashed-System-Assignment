@@ -18,7 +18,10 @@ export async function POST(request: Request) {
     });
     const result = (await response.json()) as LoginResult;
     if (!response.ok || !result.token) {
-      return NextResponse.json({ error: result.error || 'Unable to sign in.' }, { status: response.status || 401 });
+      return NextResponse.json(
+        { error: result.error || 'Unable to sign in.' },
+        { status: response.status || 401 },
+      );
     }
 
     const nextResponse = NextResponse.json({ token: result.token });
@@ -31,6 +34,9 @@ export async function POST(request: Request) {
     });
     return nextResponse;
   } catch {
-    return NextResponse.json({ error: 'The sign-in service is unavailable. Please try again.' }, { status: 502 });
+    return NextResponse.json(
+      { error: 'The sign-in service is unavailable. Please try again.' },
+      { status: 502 },
+    );
   }
 }
